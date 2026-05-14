@@ -4,6 +4,7 @@ import com.pos.dto.OrderDTO;
 import com.pos.dto.OrderItemDTO;
 import com.pos.entity.*;
 import com.pos.repository.OrderRepository;
+import com.pos.repository.OrderItemRepository;
 import com.pos.repository.ProductRepository;
 import com.pos.repository.TableRepository;
 import com.pos.repository.UserRepository;
