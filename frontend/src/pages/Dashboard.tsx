@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
+import { useTheme } from '@/hooks/useTheme'
 import { productsApi, categoriesApi, tablesApi, ordersApi } from '@/services/api'
 import type { Product, Category, TableEntity, Order, OrderItem } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Moon, Sun } from 'lucide-react'
 
 interface CartItem extends OrderItem {
   productId: string
@@ -12,6 +14,7 @@ interface CartItem extends OrderItem {
 
 export default function Dashboard() {
   const { auth, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [tables, setTables] = useState<TableEntity[]>([])
@@ -107,8 +110,8 @@ export default function Dashboard() {
       : products.filter((p) => p.categoryId === selectedCategory && p.available)
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b p-4">
+    <div className="min-h-screen bg-background">
+      <header className="bg-card shadow-sm border-b p-4">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-xl font-bold">{auth?.tenantName}</h1>
@@ -126,6 +129,9 @@ export default function Dashboard() {
             </Button>
             <Button variant={view === 'tables' ? 'default' : 'outline'} onClick={() => setView('tables')}>
               Mesas
+            </Button>
+            <Button variant="outline" size="icon" onClick={toggleTheme}>
+              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
             <Button variant="destructive" onClick={logout}>
               Salir
